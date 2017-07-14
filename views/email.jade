@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    h1=title
+    form(action='/login' , method='POST')
+        fieldset(data-role='controlgroup')
+            lable(for='username') username:
+                input(type='text',name='username',class='username')
+            br
+            br
+            lable(for='password') password:
+                input(type='password',name='password')
+                br
+                br
+            input(type='submit',name='login',value='login')
+
+
