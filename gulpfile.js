@@ -1,1 +1,1 @@
-var gulp     = require('gulp'),    gnodemon = require('gulp-nodemon'),    gutil    = require('gulp-util');var app = 'app.js';gulp.task('server', function(){    gnodemon({        script: app    })});gulp.task('default',['server']);
+var gulp     = require('gulp'),    gnodemon = require('gulp-nodemon'),// add plugin nodemon in my project    gutil    = require('gulp-util');var app = 'app.js';// my servergulp.task('server', function(){// task for using nodemon    gnodemon({        script: app    })});gulp.task('default',['server']);
