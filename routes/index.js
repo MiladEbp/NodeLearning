@@ -36,7 +36,7 @@ router.get('/login', function (req, res) {// Insert value in Dynamic parameters 
             password:req.body.pass,
             session: userSession.username
         });
-    }else{
+    }else{// check for session dont asign session of value to milad
         console.log('faild login');
     }
 
@@ -50,7 +50,7 @@ router.get('/login', function (req, res) {// Insert value in Dynamic parameters 
 
     var out = req.session.destroy();
      res.redirect('login');
-    if(out){
+    if(out){ // if for check destroy session
         console.log('Destroy session')
     }else{
         console.log(' dont destroy session')
