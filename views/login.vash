@@ -7,10 +7,10 @@
             <label>@model.lab1</label>
             <input type="text" name="username"/><br><br>
             <label>@model.lab2</label>
-            <input type="password" name="pass"/><br><br>
+            <input type="password" name="password"/><br><br>
             <input type="submit" name="login"/><br>
         </form>
-
+        <span>@model.result</span>
     });
 
 });
