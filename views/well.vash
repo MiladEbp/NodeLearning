@@ -4,8 +4,8 @@
 
         <h1>@model.title </h1>
         <span>@model.tit1 @model.name</span><br><br>
-        <span>@model.tit2 @model.last_name</span><br><br>
-        <span>@model.tit3 @model.username</span><br><br>
+        <span>@model.tit2 @model.lastName</span><br><br>
+        <span>@model.tit3 @model.userName</span><br><br>
         <form action="/login" method="POST"><!-- Return to login page -->
             <input type="submit" name="logout" value="Return"/>
         </form>
