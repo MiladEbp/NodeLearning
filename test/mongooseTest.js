@@ -4,10 +4,10 @@ var
     mongoose = require("mongoose"),
     schema = mongoose.Schema;
 
-const
-    testSchema = new schema({ url: String, text: String, id: Number},
-                            { collection : 'milad' }),
-    modelCollection = mongoose.model("milad", testSchema);
+var
+    testSchema = new schema({ url: String, text: String, id: Number,
+                              name: String, lastName: String},{collection: "milad"}),
+    modelCollection = mongoose.model("Milad",testSchema);
 
 
 
@@ -19,91 +19,65 @@ describe("Test mongodb by mongoose", function(){
            mongoose.connect(url,{useMongoClient: true},function(err){
 
                if(err){
-                   assert.fail("Do Not Connecting ");
+                   assert.fail("Do Not Connecting"+"\n");
                }else{
-                   console.log("Connect To DataBase \n");
+                   console.log("Connect To DataBase"+"\n");
                    done();
                }// else for if err connect
 
            });// mongoose connect
 
-   });///before
+   });////before
 
 
-    it("Drop Collection",function(done){
+   it("Drop Collection",function(done){
 
-        var connection = mongoose.connection,
-            listCollection = connection.db.listCollections();
-
-        listCollection.toArray(function(err,result){
-            if(err){
-              assert.fail("error in Array");
-            }else{
-                if(result.length == 0){
-                    assert.fail("No exist collection in Mongodb  and Run Insert it  \n");
-                }else{
-                   // console.log("collection Names : "+result[0]['name']);
-                    var collection = result[0]['name'];
-
-                    connection.collections[collection].drop(function(err){
+                  modelCollection.remove({},function(err){
                         if(err){
-                            assert.fail("don't Drop Collection"+collection);
+                            assert.fail("do not Drop Collection"+"\n");
                         }else{
-                            console.log("Drop collection "+collection+" is done \n");
+
+                            console.log("Remove Collection"+"\n");
                             done();
                         }
                     });// function Drop
 
-                }// else exit collection
-            }//else
-        });//Function ListCollection
+
     });// End It
 
 
 
     it("Insert in collection", function(done){
 
-        var connection = mongoose.connection;
-        var collectionName = "milad",
-            name = "shima",
-            last_name = "Mehrany",
-            userName = "admin",
-            password = "123";
-        connection.collections[collectionName].insert({
-                                                        name:     name,
-                                                        lastName: last_name,
-                                                        userName: userName,
-                                                        password: password},
-            function(err){
+        var newModel = new modelCollection();
+        newModel.name = "milad";
+        newModel.lastName = "Ebrahimpour";
 
-                if(err){
-                   assert.fail("don't Insert in collection : "+ collectionName);
-                }else{
-                    console.log("Insert data in collection : "+collectionName+"\n");
-                    done();
-                }// else
-            }// function insert
+        newModel.save(function(err, result){
+            if(err){
+               assert.fail("Don not Insert");
+            }else{
+                console.log(result);
+                done();
+            }
+        });
 
-        );// Insert in collection
+
     });// End It
 
 
 
-    it("Update Document in Collection",function(done){
-        var connection = mongoose.connection,
-            updateName = "sorosh",
-            index = {userName : "admin"};
-        var collectionName = "milad";
+   it("Update Document in Collection",function(done){
+       var
+           index = "Ebrahimpour",
+           updateName = "Merdad" ;
 
-        connection.collections[collectionName].updateOne(index,{name: updateName,
-                                                                lastName: "Mehrany",
-                                                                userName: "admin",
-                                                                password: "123"},
-            function(err){
+        modelCollection.updateOne(index,{name: updateName , lastName: index},
+            function(err, result){
                 if(err){
-                    assert.fail("don't Update Document in collection "+ collectionName+"and Run Read it");
+                    assert.fail("don't Update Document in collection and Run Read it");
                 }else{
-                    console.log("update document in collection : "+collectionName+"\n");
+                    console.log(result+"\n");
                     done();
                 }
             }// Function updateOne
@@ -113,12 +87,12 @@ describe("Test mongodb by mongoose", function(){
 
   /*  it("Delete Document in collection ", function(done){
 
-        var username = "admin";
-        modelCollection.findOneAndRemove({userName: username}, function(err){
+        var name = "Merdad";
+        modelCollection.findOneAndRemove({name: name}, function(err){
             if(err){
                 assert.fail("don't Delete document");
             }else{
-                console.log("Delete Document by username is : "+username+"\n");
+                console.log("Delete Document by name is : "+name+"\n");
                 done();
             }
         });// findOneAndRemove
