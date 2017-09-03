@@ -2,6 +2,7 @@ var
     assert = require("assert"),
     url = "mongodb://127.0.0.1:27017/test",
     mongoose = require("mongoose"),
+    Promise = require("bluebird"),
     schema = mongoose.Schema;
 
 var
@@ -15,6 +16,7 @@ var
 describe("Test mongodb by mongoose", function(){
 
    before("connect to data base", function(done){
+           mongoose.Promise = global.Promise;
 
            mongoose.connect(url,{useMongoClient: true},function(err){
 
@@ -49,9 +51,10 @@ describe("Test mongodb by mongoose", function(){
 
     it("Insert in collection", function(done){
 
-        var newModel = new modelCollection();
-        newModel.name = "milad";
-        newModel.lastName = "Ebrahimpour";
+        var newModel = new modelCollection({
+            name : "milad",
+            lastName : "Ebrahimpour"
+        });
 
         newModel.save(function(err, result){
             if(err){
