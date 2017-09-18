@@ -53,7 +53,7 @@ router.get('/well',function(req, res){///////////////////////// CHECK FOR SESSIO
             }else{
 
                 modelCollection.findOne({userName: username , password: password},function(err,fetch){
-                    if(!fetch){
+                    if(err){
                         //res.redirect('./login');
                         res.send('Accesses Denie');
                     }else {

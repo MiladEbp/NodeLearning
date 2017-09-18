@@ -7,6 +7,7 @@
     "test": "node_modules/.bin/mocha -w"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "~1.17.1",
     "child_process": "^1.0.2",
     "connect": "^3.6.3",
@@ -14,31 +15,28 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "express-session": "^1.15.3",
-    "gulp-livereload": "^3.8.1",
     "gulp-uglify": "^3.0.0",
     "jade": "~1.11.0",
     "mongodb": "^2.2.31",
-    "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2",
     "session": "^0.1.0",
     "ts-node": "^3.2.0",
-    "typescript": "^2.4.1",
-    "vash": "^0.12.2"
+    "vash": "^0.12.2",
+    "winston": "^2.3.1"
   },
   "devDependencies": {
+    "@types/mocha": "^2.2.43",
+    "@types/mongoose": "^4.7.21",
+    "@types/node": "^8.0.28",
+    "bluebird": "^3.5.0",
     "browser-sync": "^2.18.12",
     "chai": "^4.1.1",
-    "connect": "^3.6.2",
     "gulp": "^3.9.1",
-    "gulp-connect": "^5.0.0",
-    "gulp-develop-server": "^0.5.2",
-    "gulp-live-server": "0.0.30",
     "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "^3.2.1",
     "gulp-util": "^3.0.8",
-    "gulp-vash-static": "^2.0.5",
     "mocha": "^3.5.0",
-    "mocha-mongodb": "^0.1.2",
-    "mongoose": "^4.11.9"
+    "mongoose": "^4.11.9",
+    "promise": "^8.0.1"
   }
 }
