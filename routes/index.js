@@ -1,102 +1,47 @@
-var express = require('express');// add Express in nodejs
-var router = express.Router();
-var bodyParser = require('body-parser');// call body-parser in  my project
-var session = require('express-session');
-var mongoose = require('mongoose'),
-    schema = mongoose.Schema;
-
-
-const
-    schemaModel = new schema({name: String , lastName: String, userName: String ,password: String },{collection : "milad" }),
-    modelCollection = mongoose.model("milad", schemaModel);
-
-router.use(bodyParser.urlencoded({ extended: true }));
-
-router.use(session({
-    secret:'adscfsv555fvf5dv',
-    resave : false,
-    saveUninitialized: true
-}));
-
-
-////////////////////////////////////////////////////////START VASH//////////////////////////////////////////////////////
-
-router.get('/login', function (req, res) {// Insert value in Dynamic parameters in login page
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var bodyParser = require("body-parser");
+var check_class_1 = require("../bl/check-class");
+var express_1 = require("express");
+var log_class_1 = require("../lib/log-class");
+var router = express_1.Router();
+var check = new check_class_1.Check(), log = new log_class_1.winstonLog();
+router.use(bodyParser.urlencoded({ extended: false }));
+router.get("/login", function (req, res) {
     res.render('login', {
-        title: 'LOGIN FORM (vash)',
-        lab1: 'UserName : ',
-        lab2: 'Password : '
-
-
+        title: 'LOGIN FORM(vash)',
+        lab1: 'UserName',
+        lab2: 'Password'
     });
-});
-
-
-
-router.get('/well',function(req, res){///////////////////////// CHECK FOR SESSION SET ////////////
-    if(!req.session.username){
-        res.redirect('./login');
-    }else{
-        res.redirect('well');
-    }
-});
-
-
- router.post('/well',function(req,res){// Insert value in Dynamic parameters in well page and post value from login page for well page
-    var userSession = req.session,
-        username = req.body.username,
-        password = req.body.password,
-        url = "mongodb://127.0.0.1:27017/test";
-         mongoose.connect(url,{useMongoClient: true}, function(err){
-            if(err){
-                res.send("No connect Mongodb by Model");
-            }else{
-
-                modelCollection.findOne({userName: username , password: password},function(err,fetch){
-                    if(err){
-                        //res.redirect('./login');
-                        res.send('Accesses Denie');
-                    }else {
-                        userSession.username = fetch['userName'];// session set value
-
-                        res.render('well',{
-                            title:"Well Come in Page ",
-                            tit1:"Your Name is  : ",
-                            tit2:"Your Family Name is : ",
-                            tit3:"Your UserName is : ",
-                            name: fetch['name'],
-                            lastName: fetch['lastName'],
-                            userName: fetch['userName']
-                        });
-
-                    }//else
-                });//findOne
-
-            }//else connect function
-
-        });
-
-
-
- });
-
-
-
-
-
- router.post('/login',function (req, res ) {////// SESSION DESTROY///
-
-   var out =  req.session.destroy();
-     res.redirect('login');
-        if(out){
-            console.log('destroy session');
-        }else{
-            console.log('session is set');
+}); // router get Login page
+router.post("/well", function (req, res) {
+    var username = req.body.username, password = req.body.password;
+    check.checkNull(username, password, function (result) {
+        if (result != false) {
+            check.checkCollection(username, password, function (err, fetch) {
+                if (err != false) {
+                    var username_1 = fetch["username"], password_1 = fetch["password"];
+                    res.render('well', {
+                        title: "WellCome To in Page",
+                        tit1: "Your UserName Is : ",
+                        tit2: "Your Password Is : ",
+                        userName: username_1,
+                        password: password_1
+                    }); // render well page
+                    log.writeLog("Login UserName is : ", username_1);
+                }
+                else {
+                    res.send("Access Denied");
+                    log.writeLog("Access Denied UserName is :", username);
+                }
+            }); // check.checkCollection
         }
- });
-
-///////////////////////////////////////////////////////END VASH/////////////////////////////////////////////////////////
-
-
-
-module.exports = router;
+        else {
+            res.send("UserName OR Password is Null");
+        } //else
+    }); // check.checkNull
+}); // router post well page
+router.get("/login", function (req, res) {
+    res.redirect('login');
+});
+exports.index = router;

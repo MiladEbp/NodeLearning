@@ -3,11 +3,10 @@
     @html.block('body',function(model){ <!-- injection Tag  in body of layout.vash -->
 
         <h1>@model.title </h1>
-        <span>@model.tit1 @model.name</span><br><br>
-        <span>@model.tit2 @model.lastName</span><br><br>
-        <span>@model.tit3 @model.userName</span><br><br>
-        <form action="/login" method="POST"><!-- Return to login page -->
-            <input type="submit" name="logout" value="Return"/>
+        <span>@model.tit1 @model.userName</span><br><br>
+        <span>@model.tit2 @model.password</span><br><br>
+        <form action="/login" method="GET"><!-- Return to login page -->
+            <input type="submit" name="login" value="Return"/>
         </form>
 
 

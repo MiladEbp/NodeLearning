@@ -1,1 +1,10 @@
-var gulp     = require('gulp'),    gnodemon = require('gulp-nodemon'),// add plugin nodemon in my project    gutil    = require('gulp-util');var app = 'app.js';// my servergulp.task('server', function(){// task for using nodemon    gnodemon({        script: app    })});gulp.task('default',['server']);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var gulp = require("gulp");
+var nodemon = require("gulp-nodemon");
+var app = 'app.js';
+gulp.task('default', function () {
+    nodemon({
+        script: app
+    });
+});
