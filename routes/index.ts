@@ -10,7 +10,11 @@ let check = new Check(),
 router.use(bodyParser.urlencoded({ extended: false }));
 
 
+
 router.get("/login", function(req, res){
+
+
+    log.writeLog("Logout UserName is :","Null");
     res.render('login',{
         title: 'LOGIN FORM(vash)',
         lab1: 'UserName',
@@ -46,14 +50,13 @@ router.post("/well", function(req, res){
             });// check.checkCollection
         }else{
             res.send("UserName OR Password is Null");
+
         }//else
     });// check.checkNull
 });// router post well page
 
 
-router.get("/login", function(req, res){
-    res.redirect('login');
-});
+
 
 
 

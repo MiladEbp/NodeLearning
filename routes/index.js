@@ -8,6 +8,7 @@ var router = express_1.Router();
 var check = new check_class_1.Check(), log = new log_class_1.winstonLog();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.get("/login", function (req, res) {
+    log.writeLog("Logout UserName is :", "Null");
     res.render('login', {
         title: 'LOGIN FORM(vash)',
         lab1: 'UserName',
@@ -41,7 +42,4 @@ router.post("/well", function (req, res) {
         } //else
     }); // check.checkNull
 }); // router post well page
-router.get("/login", function (req, res) {
-    res.redirect('login');
-});
 exports.index = router;

@@ -11,6 +11,9 @@ export class Check {
         }
     }// checkNull Function
 
+
+
+
     checkCollection(username:string, password:string, next:any){
 
         userModel(function(err, result){
