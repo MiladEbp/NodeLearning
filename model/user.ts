@@ -1,8 +1,10 @@
 import{Schema, model} from 'mongoose';
-import {ConnectDB} from '../lib/connect-class';
+import {ConnectDb} from '../lib/DB-class';
 
-let obj_connect = new ConnectDB(),
-    UserSchema:Schema = new Schema({
+let connectDb = new ConnectDb();
+let createconnect =  connectDb.createConnect();
+
+let UserSchema:Schema = new Schema({
         url: String,
         text: String,
         id: Number,
@@ -10,17 +12,19 @@ let obj_connect = new ConnectDB(),
         password:String},
         {collection:"milad"});
 
-    export function  userModel (next:any){
+export let userModel =  model("User",UserSchema,"milad");
 
-         obj_connect.createConnect(function(err, result){
-             if(err){
-                next(err, null);
-             }else{
-                 next(err,model("User",UserSchema,"milad"));
-             }// else
-         });// obj_connect
+     // export function  userModel (next:any){
+     //
+     //  obj_connect.createConnect(function(err, result){
+     //      if(err){
+     //         next(err, null);
+     //      }else{
+     //          next(err,);
+     //      }// else
+     //  });// obj_connect
 
-     }// End function userModel
+ //}// End function userModel
 
 
 

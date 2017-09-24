@@ -38,6 +38,7 @@
     "bluebird": "^3.5.0",
     "browser-sync": "^2.18.12",
     "chai": "^4.1.1",
+    "enum": "^2.4.0",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-typescript": "^3.2.1",
