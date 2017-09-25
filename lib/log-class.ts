@@ -1,4 +1,6 @@
 import * as winston from 'winston';
+import{MongoDB} from "winston-mongodb";
+require('winston-mongodb').MongoDB
 
 ////// This Class for using  Logging in my project
 export class WinstonLog {
@@ -13,6 +15,11 @@ export class WinstonLog {
                                 new(winston.transports.File)({
                                     level : 'info',
                                     filename : this.infoLogFile
+                                }),
+                                new(winston.transports.MongoDB)({
+                                    db:'mongodb://127.0.0.1:27017/test',
+                                    collection: 'collectionTest',
+                                    level:'info'
                                 })
                             ]
                         });// let log
@@ -20,12 +27,12 @@ export class WinstonLog {
 
     /// This method for Writing different Log into file
     /// input variable is  : massage and username and type || massage: "massage in log file", username: "enter username in form", type: "info , error"
-    writeLog(type:string , massage:string , username:string){
+    writeLog(type:string , massage:string ,username:string){
 
         let logger = this.logger;
 
         if(type == 'info'){
-            logger.info(massage+username);
+            logger.info(massage);
         }else if(type == 'error'){
             logger.error(massage+username);
         }

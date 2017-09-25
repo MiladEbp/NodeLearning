@@ -2,15 +2,18 @@ import {WinstonLog} from '../lib/log-class';
 import {} from 'mochha';
 import {fail} from "assert";
 
+
+
 let winstonLog = new WinstonLog();
 
 describe("Test For log ", function(){
 
     it("Write Log in File", function(done){
         let username = "test",
-            massage = "This log is  : ",
+            massage = "salam be shadi ",
             type = "error";
         winstonLog.writeLog(type, massage , username);
+
         done();
     });// End It for Write Log in File
 

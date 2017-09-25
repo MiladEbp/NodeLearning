@@ -27,7 +27,8 @@
     "session": "^0.1.0",
     "ts-node": "^3.2.0",
     "vash": "^0.12.2",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "winston-mongoose": "0.0.2-beta"
   },
   "devDependencies": {
     "@types/express": "^4.0.37",
@@ -46,6 +47,8 @@
     "mocha": "^3.5.0",
     "mongoose": "^4.11.9",
     "morgan": "^1.8.2",
-    "promise": "^8.0.1"
+    "promise": "^8.0.1",
+    "winston-mongodb": "^2.0.10",
+    "winston-mongoose": "0.0.2-beta"
   }
 }
