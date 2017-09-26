@@ -1,12 +1,14 @@
 import * as winston from 'winston';
 import{MongoDB} from "winston-mongodb";
-require('winston-mongodb').MongoDB
+require('winston-mongodb').MongoDB;
 
 ////// This Class for using  Logging in my project
 export class WinstonLog {
 
     //// This variable is Path of file for Write log into file
-    private infoLogFile = "lib/log/result-log.log";
+    private infoLogFile = 'lib/log/result-log.log';
+    private dbUrl = 'mongodb://127.0.0.1:27017/test';
+    private collectionName = 'testLog';
 
     /// This using transports options in winston
     public   logger = new (winston.Logger)({
@@ -17,11 +19,11 @@ export class WinstonLog {
                                     filename : this.infoLogFile
                                 }),
                                 new(winston.transports.MongoDB)({
-                                    db:'mongodb://127.0.0.1:27017/test',
-                                    collection: 'collectionTest',
+                                    db: this.dbUrl,
+                                    collection: this.collectionName,
                                     level:'info'
                                 })
-                            ]
+                            ]// transports
                         });// let log
 
 
@@ -32,7 +34,7 @@ export class WinstonLog {
         let logger = this.logger;
 
         if(type == 'info'){
-            logger.info(massage);
+            logger.info(massage+username);
         }else if(type == 'error'){
             logger.error(massage+username);
         }

@@ -2,25 +2,46 @@ import * as bodyParser from 'body-parser';
 import {Check} from '../bl/check-class';
 import {Router} from 'express';
 import {WinstonLog} from '../lib/log-class';
+import * as session from 'express-session';
+import {ConnectDb} from '../lib/DB-class';
+import {} from 'enum';
+
+
+
 
 const router: Router = Router();
-let check = new Check(),
-    log = new  WinstonLog();
+const mongoStore = require('connect-mongo')(session);
+
+
+let connect = new ConnectDb();
+let connection = connect.createConnect();
+let check = new Check();
+let  log = new  WinstonLog();
+
+
+enum Types{ info , error };
 
 router.use(bodyParser.urlencoded({ extended: false }));
 
-
+router.use(session({
+    secret: 'a55dede445e77cd5fr',
+    resave : false,
+    saveUninitialized: true,
+    store: new mongoStore({mongooseConnection : connection, collection: 'testLog'})
+}));
 
 router.get("/login", function(req, res){
 
 
-    log.writeLog("info","Logout UserName is :","Null");
+    log.writeLog(Types[0],'Logout UserName is :','Null');
     res.render('login',{
         title: 'LOGIN FORM(vash)',
         lab1: 'UserName',
         lab2:'Password'
     });
 });// router get Login page
+
+
 
 
 router.post("/well", function(req, res){
@@ -37,7 +58,8 @@ router.post("/well", function(req, res){
                     let username = fetch["username"],
                         password = fetch["password"];
 
-                    log.writeLog("info","Login UserName is : ", username);
+
+                    log.writeLog(Types[0],"Login UserName is : ", username);
 
                     res.render('well',{
                         title: "WellCome To in Page",
@@ -50,7 +72,7 @@ router.post("/well", function(req, res){
                 }
             });// check.checkCollection
         }else{
-            log.writeLog("error","UserName OR Password is Null",username);
+            log.writeLog(Types[1],"UserName OR Password is Null",username);
             res.send("UserName OR Password is Null");
 
         }//else

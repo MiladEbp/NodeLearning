@@ -10,7 +10,7 @@ describe("Test For log ", function(){
 
     it("Write Log in File", function(done){
         let username = "test",
-            massage = "salam be shadi ",
+            massage = "this is test ",
             type = "error";
         winstonLog.writeLog(type, massage , username);
 

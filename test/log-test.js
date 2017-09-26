@@ -5,7 +5,7 @@ var assert_1 = require("assert");
 var winstonLog = new log_class_1.WinstonLog();
 describe("Test For log ", function () {
     it("Write Log in File", function (done) {
-        var username = "test", massage = "salam be shadi ", type = "error";
+        var username = "test", massage = "this is test ", type = "error";
         winstonLog.writeLog(type, massage, username);
         done();
     }); // End It for Write Log in File
