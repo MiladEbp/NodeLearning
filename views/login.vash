@@ -3,14 +3,14 @@
     @html.block('body',function(model){ <!-- injection form in body of layout.vash -->
 
         <h1>@model.title</h1>
-        <form method="POST" action="/well"> <!-- Post value for well page -->
+        <form method="POST" action="/login"> <!-- Post value for well page -->
             <label>@model.lab1</label>
             <input type="text" name="username"/><br><br>
             <label>@model.lab2</label>
             <input type="password" name="password"/><br><br>
             <input type="submit" name="login"/><br>
         </form>
-        <span>@model.result</span>
-    });
+<p>@model.user</p>
+    })
 
-});
+})

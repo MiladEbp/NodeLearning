@@ -4,7 +4,7 @@ import {userModel} from '../model/user'
 ////////// This Class is Check username and password that null field in view and get user  by username and password in collection
 export class Check {
 
-
+//
 ////// This method is checkNullUsernamePassword
     checkNullUsernamePassword(username:string, password:string, next:any){
         if(!username || !password){
@@ -15,7 +15,7 @@ export class Check {
     }//  End checkNullUsernamePassword
 
 
-/////////// This method for GetUser by UserName and Password///////////////////////////////////
+// /////////// This method for GetUser by UserName and Password///////////////////////////////////
     getUser(query, next:any){
 
         userModel.findOne(query, function(err, result){

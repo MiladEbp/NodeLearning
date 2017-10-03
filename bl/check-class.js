@@ -5,6 +5,7 @@ var user_1 = require("../model/user");
 var Check = (function () {
     function Check() {
     }
+    //
     ////// This method is checkNullUsernamePassword
     Check.prototype.checkNullUsernamePassword = function (username, password, next) {
         if (!username || !password) {
@@ -14,7 +15,7 @@ var Check = (function () {
             next(true);
         }
     }; //  End checkNullUsernamePassword
-    /////////// This method for GetUser by UserName and Password///////////////////////////////////
+    // /////////// This method for GetUser by UserName and Password///////////////////////////////////
     Check.prototype.getUser = function (query, next) {
         user_1.userModel.findOne(query, function (err, result) {
             if (err) {
