@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var assert_1 = require("assert");
 var check_class_1 = require("../bl/check-class");
 var object_check = new check_class_1.Check();
@@ -13,9 +13,9 @@ describe("Test For check-class.ts in bl", function () {
             else {
                 console.log("username OR Password is set");
                 done();
-            } // else
-        }); // object_check
-    }); // it  for Check is function of checkNullUsernamePassword
+            }
+        });
+    });
     it("Test For checkCollection and get user", function (done) {
         var username = "milad", password = "admin";
         object_check.checkCollection(username, password, function (result) {
@@ -26,6 +26,7 @@ describe("Test For check-class.ts in bl", function () {
                 console.log(result);
                 done();
             }
-        }); //
-    }); // it for
-}); //describe
+        });
+    });
+});
+//# sourceMappingURL=bl-test.js.map

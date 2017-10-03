@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var mongoose_1 = require("mongoose");
 var assert_1 = require("assert");
 var url = "mongodb://127.0.0.1:27017/test";
@@ -13,8 +13,8 @@ describe("Test class connect", function () {
                 console.log("connect to DataBase by Connect Function" + "\n");
                 done();
             }
-        }); // connect
-    }); // it connect
+        });
+    });
     it("create connection ", function (done) {
         mongoose_1.createConnection(url, function (err) {
             if (err) {
@@ -25,5 +25,6 @@ describe("Test class connect", function () {
                 done();
             }
         });
-    }); // it create connection
-}); // describe
+    });
+});
+//# sourceMappingURL=DB-test.js.map

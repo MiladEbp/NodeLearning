@@ -5,8 +5,8 @@
         <h1>@model.title </h1>
         <span>@model.tit1 @model.userName</span><br><br>
         <span>@model.tit2 @model.password</span><br><br>
-        <form action="/login" method="GET"><!-- Return to login page -->
-            <input type="submit" name="login" value="Return"/>
+        <form action="/logout" method="POST"><!-- Return to login page -->
+            <input type="submit" name="logout" value="Return"/>
         </form>
 
 

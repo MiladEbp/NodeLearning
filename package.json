@@ -7,10 +7,14 @@
     "test": "node_modules/.bin/mocha -w"
   },
   "dependencies": {
+    "@types/body-parser": "^1.16.5",
+    "@types/connect-flash": "0.0.33",
     "@types/cookie-parser": "^1.4.1",
+    "@types/express-session": "^1.15.3",
     "@types/gulp": "^4.0.4",
     "@types/gulp-nodemon": "0.0.30",
     "@types/http-status": "^0.2.30",
+    "@types/passport": "^0.3.4",
     "bluebird": "^3.5.0",
     "body-parser": "~1.17.1",
     "child_process": "^1.0.2",

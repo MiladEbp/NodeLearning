@@ -1,4 +1,5 @@
 import {Router} from 'express';
+let flash = require ('connect-flash');
 import * as passport from 'passport';
 import {userModel} from '../model/user';
 let localStrategy = require('passport-local').Strategy;
@@ -12,16 +13,16 @@ import {isNull} from "util";
 
 //*********************** PASSPORT  ***********************************************//
 
-passport.use(new localStrategy(function(username, password, done){
-  console.log(username + '\n'+password)
+passport.use(new localStrategy(function(username:any, password:any, done:any){
+
     userModel.findOne({username: username, password: password}, function(err, user){
-        console.log(user);
+
         if(err){
             return done(err);
         }else if(!user) {
-            return done('null', false);
+            return done(null, false);
         }else{
-            return done('null', user);
+            return done(null, user);
         }
     });
 }));
@@ -30,17 +31,14 @@ passport.use(new localStrategy(function(username, password, done){
 //serializeUser
 //deserializeUser
 
-passport.serializeUser(function(user, cb) {
-    cb(null, user.id);
+passport.serializeUser(function(user, done) {
+    done(null, user);
 });
 
-passport.deserializeUser(function(id, cb) {
-    console.log(id)
-    userModel.findById(id, function (err, user) {
-        if (err) { return cb(err); }
-        cb(null, user);
-    });
+passport.deserializeUser(function(user, done) {
+    done(null, user);
 });
+
 // *******************************************************************//
 const router: Router = Router();
 let check = new Check();
@@ -61,7 +59,7 @@ router.use(session({
     secret: '6s5s5as55sd',
     resave: false,
     saveUninitialized: false
-}));
+}))
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -84,72 +82,61 @@ router.get('/login', function(req, res){
 
 
 router.post('/login', function(req:any, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-        console.log(err);
-        if (err) { return next(err); }
-        if (!user) { return res.redirect('/login'); }
-        req.logIn(user, function(err) {
-            console.log(err);
-            if (err) { return next(err); }
-            return res.redirect('/well');
+    let username:string = req.body.username,
+        password:string = req.body.password;
+    if((username).length === 0 || (password).length === 0){
+        res.render('login', {
+            title: 'LOGIN FORM(vash)',
+            lab1: 'UserName',
+            lab2:'Password',
+            message:'UserName Or Password filed is Null'
         });
-    })(req, res, next);
-});
-//
-//
-// router.post('/login',function(req, res) {
-//         let username: string = req.body.username,
-//             password: string = req.body.password;
-//
-//         if((username).length === 0  || (password).length === 0) {
-//             res.render('login', {
-//                 title: 'LOGIN FORM(vash)',
-//                 lab1: 'UserName',
-//                 lab2: 'Password',
-//                 user: 'Username and password is Null'
-//             });// res.render
-//
-//         }else{
-//             userModel.findOne({username: username}, function(err, result){
-//                 if(err){
-//                     console.log(err);
-//                 }else{
-//                     if(!result) {
-//                         res.render('login', {
-//                             title: 'LOGIN FORM(vash)',
-//                             lab1: 'UserName',
-//                             lab2: 'Password',
-//                             user: 'User Not Found'
-//                         });// res.render
-//                     }else if(result['password'] != password){
-//                         res.render('login', {
-//                             title: 'LOGIN FORM(vash)',
-//                             lab1: 'UserName',
-//                             lab2: 'Password',
-//                             user: 'Password is False'
-//                         });// res.render
-//                     }else{
-//                         req.session.username = result['username'];
-//                         res.render('login',{
-//                             title: 'LOGIN FORM(vash)',
-//                             lab1: 'UserName',
-//                             lab2:'Password',
-//                             user:  req.session.username
-//                         });// res.render
-//                     }// else
-//                 }
-//
-//
-//             });// userModel.findOne
-//         }// else
-//
-// });
+    }else {
+        passport.authenticate('local', function (err: any, user: any) {
+            if (err) {
+                return next(err);
+            } else if (!user) {
 
-router.get('/well', checkAuthentication, function(req, res){
-        res.render('well', {
-            tit1: 'UserName',
-            tit2: 'Password'
-        });
+                res.render('login', {
+                    title: 'LOGIN FORM(vash)',
+                    lab1: 'UserName',
+                    lab2:'Password',
+                    message:'User  Not Found'
+                });// res.render
+                 res.redirect('/login');
+
+            }// else if
+            req.logIn(user, function (err: any) {
+                if (err) {
+                     next(err);
+                } else {
+                     res.redirect('/well');
+                }// else
+            });// LogIn
+        })(req, res, next);
+        //passport.authenticate
+    }// else
+});
+
+router.get("/well", checkAuthentication,function(req, res){
+
+    res.render("well", {
+        tit1: 'UserName :',
+        tit2: 'Password :',
+        userName:req.user.username,
+        password:req.user.password
+    });
+
+});
+
+router.post('/logout', function(req, res){
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.redirect('/login');
+        }
+    })
 });
 
 

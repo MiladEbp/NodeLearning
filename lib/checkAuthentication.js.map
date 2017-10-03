@@ -1,0 +1,1 @@
+{"version":3,"file":"checkAuthentication.js","sourceRoot":"","sources":["checkAuthentication.ts"],"names":[],"mappings":";;AAAA,6BAAoC,GAAO,EAAE,GAAO,EAAE,IAAQ;IACtD,EAAE,CAAA,CAAC,GAAG,CAAC,eAAe,EAAE,CAAC,CAAA,CAAC;QACtB,MAAM,CAAC,IAAI,EAAE,CAAC;IAClB,CAAC;IAAA,IAAI,CAAA,CAAC;QACF,GAAG,CAAC,QAAQ,CAAC,QAAQ,CAAC,CAAC;IAC3B,CAAC;AACT,CAAC;AAND,kDAMC"}

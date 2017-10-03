@@ -18,19 +18,19 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use("/", index);
 
 
-app.use(function(err,req, res, next){
-
-    res.status(err.status||404);
-    next(new Error('File not found'));
-});
-
-
-app.use(function(err,req,res,next){
-    res.locals.message = err.massage;
-    res.locals.error = req.app.get('env') === 'development'? err:{};
-    res.status(err.status||500);
-    res.render('error');
-});
+// app.use(function(err,req, res, next){
+//
+//     res.status(err.status||404);
+//     next(new Error('File not found'));
+// });
+//
+//
+// app.use(function(err,req,res,next){
+//     res.locals.message = err.massage;
+//     res.locals.error = req.app.get('env') === 'development'? err:{};
+//     res.status(err.status||500);
+//     res.render('error');
+// });
 
 
 // app.get('/',function(req, res){

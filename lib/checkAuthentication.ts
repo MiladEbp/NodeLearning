@@ -1,6 +1,6 @@
-export function checkAuthentication(req, res, next){
+export function checkAuthentication(req:any, res:any, next:any){
         if(req.isAuthenticated()){
-            res.redirect('/well');
+            return next();
         }else{
             res.redirect('/login');
         }

@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var assert_1 = require("assert");
 var user_1 = require("../model/user");
 var util_1 = require("util");
@@ -16,10 +16,10 @@ describe("Test for model ", function () {
                 else {
                     console.log("Delete Data form collection" + "\n");
                     done();
-                } // isNull result
-            } // else err
-        }); // findOneAndRemove
-    }); // End it Drop
+                }
+            }
+        });
+    });
     it("Insert Collection", function (done) {
         var objSave = new user_1.userModel({
             username: 'Milad',
@@ -41,12 +41,12 @@ describe("Test for model ", function () {
                         else {
                             console.log("Result after Insert in Collection" + "\n" + result + "\n");
                             done();
-                        } // else
-                    }); // function save
-                } // else result
-            } // else err
-        }); // findOne
-    }); // End it Insert
+                        }
+                    });
+                }
+            }
+        });
+    });
     it("Update Collection", function (done) {
         var index = { username: "ali" }, updateValue = { username: "milad", password: "admin" };
         user_1.userModel.findOneAndUpdate(index, updateValue, function (err, result) {
@@ -61,9 +61,9 @@ describe("Test for model ", function () {
                     console.log("Update is Done " + "\n");
                     done();
                 }
-            } // else
-        }); // findOneAndUpdate
-    }); // End it Update
+            }
+        });
+    });
     it("Read Collection", function (done) {
         user_1.userModel.find({}, function (err, result) {
             if (err) {
@@ -76,8 +76,9 @@ describe("Test for model ", function () {
                 else {
                     console.log(result);
                     done();
-                } // else result
-            } //else err
-        }); // End it Read
+                }
+            }
+        });
     });
 });
+//# sourceMappingURL=model-test.js.map
