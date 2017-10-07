@@ -28,7 +28,7 @@ export class ConnectDb{
 ////////// This method  is for createConnect
     createConnect(){
 
-                  return  createConnection(ConnectDb.url,function(err) {
+                  return  createConnection(ConnectDb.url,function(err:any) {
                         if (err) {
                             console.log(err);
                         } else {

@@ -1,15 +1,16 @@
 "use strict";
 exports.__esModule = true;
-var express_1 = require("express");
-var flash = require('connect-flash');
+var express = require("express");
 var passport = require("passport");
 var user_1 = require("../model/user");
-var localStrategy = require('passport-local').Strategy;
 var bodyParser = require("body-parser");
 var check_class_1 = require("../bl/check-class");
 var log_class_1 = require("../lib/log-class");
 var session = require("express-session");
 var checkAuthentication_1 = require("../lib/checkAuthentication");
+var mongoStore = require('connect-mongo')(session);
+var localStrategy = require('passport-local').Strategy;
+var router = express.Router();
 passport.use(new localStrategy(function (username, password, done) {
     user_1.userModel.findOne({ username: username, password: password }, function (err, user) {
         if (err) {
@@ -23,13 +24,14 @@ passport.use(new localStrategy(function (username, password, done) {
         }
     });
 }));
-passport.serializeUser(function (user, done) {
-    done(null, user);
+passport.serializeUser(function (user, next) {
+    next(null, user._id);
 });
-passport.deserializeUser(function (user, done) {
-    done(null, user);
+passport.deserializeUser(function (id, next) {
+    user_1.userModel.findById(id, function (err, user) {
+        next(null, user);
+    });
 });
-var router = express_1.Router();
 var check = new check_class_1.Check();
 var log = new log_class_1.WinstonLog();
 var Types;
@@ -44,8 +46,14 @@ router.use(bodyParser.urlencoded({
 router.use(passport.initialize());
 router.use(session({
     secret: '6s5s5as55sd',
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true,
+    store: new mongoStore({
+        url: 'mongodb://127.0.0.1:27017/test',
+        collection: 'sessionLogin',
+        autoRemove: 'disabled',
+        ttl: 2 * 24 * 60 * 60
+    })
 }));
 router.use(passport.initialize());
 router.use(passport.session());

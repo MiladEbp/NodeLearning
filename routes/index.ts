@@ -1,18 +1,19 @@
-import {Router} from 'express';
-let flash = require ('connect-flash');
+import * as express from 'express';
 import * as passport from 'passport';
 import {userModel} from '../model/user';
-let localStrategy = require('passport-local').Strategy;
 import * as bodyParser from 'body-parser';
 import {Check} from '../bl/check-class';
 import {WinstonLog} from '../lib/log-class';
 import * as session from 'express-session';
 import {} from 'enum';
 import {checkAuthentication} from '../lib/checkAuthentication';
-import {isNull} from "util";
+
+
+let mongoStore = require('connect-mongo')(session);
+let localStrategy = require('passport-local').Strategy;
+const router: express.Router = express.Router();
 
 //*********************** PASSPORT  ***********************************************//
-
 passport.use(new localStrategy(function(username:any, password:any, done:any){
 
     userModel.findOne({username: username, password: password}, function(err, user){
@@ -31,20 +32,26 @@ passport.use(new localStrategy(function(username:any, password:any, done:any){
 //serializeUser
 //deserializeUser
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser(function(user, next) {
+    next(null, user._id);
 });
 
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+passport.deserializeUser(function(id, next) {
+    userModel.findById(id, function(err, user){
+        next(null, user);
+    });
 });
 
-// *******************************************************************//
-const router: Router = Router();
-let check = new Check();
-let  log = new  WinstonLog();
+// *************************   Object   ******************************************//
+
+let check   = new  Check();
+let  log    = new  WinstonLog();
+// let connect = new ConnectDb();
 enum Types{ info , error };
-//*****************************************************************//
+
+
+
+//****************************** RouterUse  *************************************//
 
 //session
 // body-parser
@@ -57,17 +64,24 @@ router.use(passport.initialize());
 
 router.use(session({
     secret: '6s5s5as55sd',
-    resave: false,
-    saveUninitialized: false
-}))
+    resave: true,
+    saveUninitialized: true,
+    store: new mongoStore({
+        url:'mongodb://127.0.0.1:27017/test',
+        collection:'sessionLogin',
+        autoRemove: 'disabled',
+        ttl:2*24*60*60
+    })
+}));
 
 router.use(passport.initialize());
 router.use(passport.session());
-//*************************************************************//
-
-// get for vash
 
 
+//******************************************************************//
+
+// GET : loginPage  - WellPage
+// POST : loginPage - WellPage - logoutPage
 
 
 router.get('/login', function(req, res){
@@ -110,7 +124,9 @@ router.post('/login', function(req:any, res, next) {
                 if (err) {
                      next(err);
                 } else {
-                     res.redirect('/well');
+
+                        res.redirect('/well');
+
                 }// else
             });// LogIn
         })(req, res, next);
@@ -118,8 +134,8 @@ router.post('/login', function(req:any, res, next) {
     }// else
 });
 
-router.get("/well", checkAuthentication,function(req, res){
 
+router.get("/well", checkAuthentication,function(req, res){
     res.render("well", {
         tit1: 'UserName :',
         tit2: 'Password :',
@@ -129,6 +145,8 @@ router.get("/well", checkAuthentication,function(req, res){
 
 });
 
+
+//Destroy Session
 router.post('/logout', function(req, res){
     req.session.destroy(function(err){
         if(err){
@@ -151,4 +169,4 @@ router.post('/logout', function(req, res){
 
 
 
-export const index: Router = router;
+export const index: express.Router = router;
